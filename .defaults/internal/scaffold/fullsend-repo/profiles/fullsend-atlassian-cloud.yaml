@@ -1,0 +1,32 @@
+---
+id: fullsend-atlassian-cloud
+display_name: Fullsend Atlassian Cloud
+description: Atlassian Cloud API access for fullsend agents
+category: data
+endpoints:
+  # Accepted risk: wildcard permits egress to any Atlassian Cloud tenant,
+  # not just the org's own instance. Per-tenant scoping requires OpenShell
+  # profile templating, which is not yet supported. Revisit when OpenShell
+  # gains that capability.
+  - host: "*.atlassian.net"
+    port: 443
+    protocol: rest
+    access: read-write
+    enforcement: enforce
+  # Platform API Gateway and OAuth token endpoint. Atlassian-managed service
+  # accounts authenticate only through these: their scoped API tokens are
+  # used at api.atlassian.com/ex/jira/{cloudId}/..., and OAuth 2.0 client
+  # credentials are exchanged at auth.atlassian.com/oauth/token.
+  - host: "api.atlassian.com"
+    port: 443
+    protocol: rest
+    access: read-write
+    enforcement: enforce
+  - host: "auth.atlassian.com"
+    port: 443
+    protocol: rest
+    access: read-write
+    enforcement: enforce
+binaries:
+  - "**/curl"
+  - "**/node"
